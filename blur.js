@@ -1,9 +1,8 @@
 Blur = function(image, n, method) {
-    console.time('a');
     var width = image.width;
     var height = image.height;
 
-    count = 0;
+    //count = 0;
 
     if (width * height > 150 * 150) {
         if (width > height) {
@@ -35,32 +34,23 @@ Blur = function(image, n, method) {
     var Enum = {};
 
     calculate(n);
-    console.timeEnd('a');
 
-    console.time('b');
     for (var y = 0; y < height; y++) {
         for (var x = 0; x < width; x++) {
             blur(x, y);
         }
     }
-    console.timeEnd('b');
 
-    console.log(width, height)
-
-    console.time('c');
     for (var i = 0; i < tempData.length; i++) {
         imageData.data[i] = tempData[i];
     }
-    console.timeEnd('c');
 
-    console.time('d');
     canvas.getContext('2d').putImageData(imageData, 0 , 0);
 
     var _canvas = document.createElement('canvas');
     _canvas.width = image.width;
     _canvas.height = image.height;
     _canvas.getContext('2d').drawImage(canvas, 0, 0, _canvas.width, _canvas.height);
-    console.timeEnd('d');
     return _canvas.toDataURL();
 
     function blur(x, y) {
@@ -122,7 +112,6 @@ Blur = function(image, n, method) {
                 }
             }
         }
-        console.log(tempEnum);
 
         var keys = Object.keys(tempEnum);
         for (i = 0; i < keys.length; i++) {
@@ -131,8 +120,6 @@ Blur = function(image, n, method) {
         for (i = 0; i < keys.length; i++) {
             Enum[keys[i]] = tempEnum[keys[i]].sum / (total * tempEnum[keys[i]].count);
         }
-        console.log(Enum);
-        console.log(total);
     }
 
     function Linear(distanceSquare) {
@@ -140,12 +127,8 @@ Blur = function(image, n, method) {
         return 1 - x;
     }
 
-    function no(distanceSquare) {
-        var x = Math.sqrt(distanceSquare) / (n + 1);
-        return 1;
-    }
-    function no1(distanceSquare) {
-        var x = Math.sqrt(distanceSquare) / (n + 1);
-        return x;
-    }
+    //function no(distanceSquare) {
+        //var x = Math.sqrt(distanceSquare) / (n + 1);
+        //return 1;
+    //}
 };
